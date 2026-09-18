@@ -62,8 +62,8 @@ def infer(subsystem, path, filename=None):
                    "timeline":[{"time":str(times[i]), "elapsed":float((times[i]-times[0]).total_seconds()), "current":float(frame.iloc[i,1]), "position":float(frame.iloc[i,-1])} for i in indices],
                    "segment_evidence":[{"start":float((times[a]-times[0]).total_seconds()), "end":float((times[b-1]-times[0]).total_seconds()), "label":saved["classes"][int(y)], "support":float(p)} for (a,b),y,p in zip(segments,values,support)],
                    "evidence":evidence(X.iloc[int(np.argmax(values))].to_dict(), saved),
-                   "explanation":"Operations are separated by acquisition gaps and command reversals. Evidence shows deviations from training segments; it does not establish a fault cause."}
-        warnings.append("Segmentation is validated on this acquisition format; uninterrupted live streams need additional validation.")
+                   "explanation":"Finds door movements and flags unusual signals."}
+        warnings.append("Live streams need more testing.")
     elif subsystem == "acv":
         cars, X, info = acv_features(path)
         scores = peer_scores(X, saved["name"])
@@ -71,10 +71,10 @@ def infer(subsystem, path, filename=None):
         rows = [{"file_id":filename, "ranked_cars":"|".join(cars[j] for j in order)}]
         details = {**info, "ranking":[{"car":cars[j], "score":float(scores[j]),
             "mean_temperature_residual":float(np.nan_to_num(X.iloc[j].get("Indoor Average Temperature_peer_mean", 0)))} for j in order],
-            "explanation":"Cars are compared with the median of their seven peers at matching timestamps. A persistent warmer cabin increases the score. Scores are not probabilities."}
-        warnings.append("Validation contains only six labelled fault cases; inspect the evidence before maintenance decisions.")
+            "explanation":"Compares each car with its peers. Warmer cars score higher."}
+        warnings.append("Only 6 labelled examples. Check before acting.")
         if X.filter(like="_missing").mean().mean() > .1:
-            warnings.append("More than 10% of selected telemetry is missing. Ranking uses available readings.")
+            warnings.append("Over 10% of readings are missing. Ranking uses available data.")
     else:
         feature, details = (rail_features if subsystem == "rail" else shm_features)(path)
         X = clean_columns(pd.DataFrame([feature]))
@@ -86,12 +86,12 @@ def infer(subsystem, path, filename=None):
         details["evidence"] = evidence(X.iloc[0].to_dict(), saved)
         if subsystem == "rail":
             details["model_support"] = float(saved["model"].predict_proba(X.reindex(columns=saved["columns"])).max())
-        details["explanation"] = ("Heatmap shows RMS vibration at each axle box. Odd positions map to Side I; even positions to Side II. Feature deviations are descriptive evidence, not causal attribution."
-            if subsystem == "rail" else "Rainflow counting measures repeated stress ranges. The model calibrates these and distribution features against reference cumulative damage. Damage is not a failure probability or remaining-life estimate.")
+        details["explanation"] = ("Shows vibration by axle box and side."
+            if subsystem == "rail" else "Uses stress cycles to estimate damage.")
         if subsystem == "shm":
-            warnings.append("Stress units and S–N constants were not supplied. Interpret the estimate within the supplied dataset's scale.")
+            warnings.append("Units are missing. Use this estimate only for this dataset.")
             if details["rows"] != 581120:
-                warnings.append("Sequence length differs from the 581,120-reading training files; prediction may be unreliable.")
+                warnings.append("File length differs from training. The estimate may be less reliable.")
     validate_rows(subsystem, rows)
     return {"subsystem":subsystem, "file_id":filename, "model":saved["name"], "rows":rows,
             "details":details, "warnings":warnings, "csv_filename":f"{subsystem}_predictions.csv",

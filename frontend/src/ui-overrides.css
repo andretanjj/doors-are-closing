@@ -1,0 +1,146 @@
+/* Keep a little space below the content on every screen size. */
+main {
+  padding-bottom: 44px;
+}
+
+footer {
+  padding-bottom: 22px;
+}
+
+.sidebar-bottom {
+  padding-bottom: 0;
+  transform: translateY(-24px);
+}
+
+.system-card.chosen {
+  border-color: var(--accent);
+}
+
+.system-card.chosen .card-bottom {
+  border-top-color: var(--accent);
+}
+
+.system-card.chosen .selected-check {
+  background: var(--accent);
+}
+
+/* Improve readability without changing the layout hierarchy. */
+.workspace-label,
+.nav-label,
+.live-label {
+  font-size: 10px;
+}
+
+.brand {
+  margin-bottom: 28px;
+}
+
+.nav-item,
+.sub-nav {
+  font-size: 13px;
+}
+
+.topbar,
+.system-status {
+  font-size: 12px;
+}
+
+.eyebrow {
+  font-size: 10px;
+}
+
+.page-heading p,
+.section-header p {
+  font-size: 13px;
+}
+
+.system-card h3 {
+  font-size: 16px;
+}
+
+.system-card p,
+.card-bottom {
+  font-size: 10px;
+}
+
+.card-number {
+  font-size: 13px;
+}
+
+.dropzone h3 {
+  font-size: 14px;
+}
+
+.dropzone p,
+.input-note,
+.text-button {
+  font-size: 12px;
+}
+
+.file-pill,
+.awaiting {
+  font-size: 9px;
+}
+
+.primary-button {
+  font-size: 12px;
+}
+
+.context-panel > p,
+.explanation,
+.method-card > p {
+  font-size: 13px;
+}
+
+.context-facts span {
+  font-size: 8px;
+}
+
+.context-facts b,
+.empty-result h3 {
+  font-size: 11px;
+}
+
+.empty-result p,
+.result-warning,
+.batch-note {
+  font-size: 11px;
+}
+
+.chart,
+.evidence,
+table {
+  font-size: 12px;
+}
+
+.chart h3 {
+  font-size: 13px;
+}
+
+.evidence summary span,
+.method-foot,
+.secondary-button {
+  font-size: 11px;
+}
+
+.method-card > h2 {
+  font-size: 22px;
+}
+
+.method-notice p {
+  font-size: 12px;
+}
+
+footer {
+  font-size: 10px;
+}
+
+footer span:last-child {
+  font-size: 9px;
+}
+
+@media (max-width: 800px) {
+  main {
+    padding-bottom: 38px;
+  }
+}
