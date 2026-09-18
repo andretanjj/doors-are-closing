@@ -2,7 +2,7 @@
 
 ## Status
 
-Four-subsystem application, trained artefacts, validation reports, upload/export APIs, React interface, automated tests, Docker packaging, and Cloud Run deployment command implemented. Cloud deployment and hosted end-to-end verification remain pending an approved Google Cloud project and authenticated deployment access. No organiser-held-out score is known. README is reserved for Phase 3; video pitch remains on hold.
+Four-subsystem application, trained artefacts, validation reports, upload/export APIs, React interface, automated tests, Docker packaging, and Cloud Run deployment implemented. Cloud deployment and hosted HTTP end-to-end verification subsequently completed; see [deployment evidence](DEPLOYMENT.md). No organiser-held-out score is known. The Phase 3 README is now included; video pitch remains on hold.
 
 ## Local validation results
 
@@ -58,4 +58,4 @@ The container packages the selected trained models; trusted repository artefacts
 
 ## Verification completed
 
-17 automated tests passed. TypeScript and Vite production build passed. Docker build passed and a real-network container smoke test exercised health, static frontend, one upload per subsystem, combined ZIP export and invalid-upload rejection. Browser checks exercised Door and ACV upload/results, including charts and ranking. All 86 supplied test inputs were separately run through the shared application endpoints and all four output files passed official-example schema and coverage checks. Cloud hosting and hosted end-to-end testing are still pending, not claimed complete.
+17 automated tests passed. TypeScript and Vite production build passed. Docker build passed and a real-network container smoke test exercised health, static frontend, one upload per subsystem, combined ZIP export and invalid-upload rejection. Browser checks exercised Door and ACV upload/results, including charts and ranking. All 86 supplied test inputs were separately run through the shared application endpoints and all four output files passed official-example schema and coverage checks. The same four-subsystem smoke test subsequently passed on the public Cloud Run deployment; see [deployment evidence](DEPLOYMENT.md).
